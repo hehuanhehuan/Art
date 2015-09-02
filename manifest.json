@@ -1,0 +1,96 @@
+{
+  "manifest_version": 2,
+  "name": "Art",
+  "description": "Art : order",
+  "version": "0.0.3",
+  "browser_action": {
+	"default_icon": "icon.png",
+    "default_name": "Art",
+    "default_title": "Art",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "icons": {
+	"16": "icon.png",
+	"48": "icon.png",
+	"128": "icon.png"
+  },
+  "background": {
+    "scripts": [
+      "javascripts/jquery-2.1.3.min.js",
+      "javascripts/remote_api.js",
+      "javascripts/dama.js",
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.jd.com/*"],
+      "js": ["javascripts/jquery-2.1.3.min.js", "javascripts/remote_api.js", "javascripts/init.js", "javascripts/dama.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://passport.jd.com/uc/login*","https://passport.jd.com/new/login*"],
+      "js": ["javascripts/jd/login.js"],
+      "run_at": "document_end"
+    },
+	{
+	  "js":["javascripts/jd/dangerous_verify.js"],
+	  "run_at": "document_end",
+	  "matches": [ "*://safe.jd.com/dangerousVerify/index.action*"]
+	},
+	{
+	  "js":["javascripts/jd/list_action.js"],
+	  "run_at": "document_end",
+	  "matches": [ "*://order.jd.com/center/list.action*"]
+	},
+    {
+      "js":["javascripts/jd/item_product.js"],
+      "run_at": "document_end",
+      "matches": [ "*://item.jd.com/*.html*"]
+    },
+    {
+      "js":["javascripts/jd/go_cart.js"],
+      "run_at": "document_end",
+      "matches": [ "*://cart.jd.com/addToCart.html*"]
+    },
+    {
+      "js":["javascripts/jd/cart.js"],
+      "run_at": "document_end",
+      "matches": [ "*://cart.jd.com/cart*"]
+    },
+    {
+      "js":["javascripts/jd/order.js"],
+      "run_at": "document_end",
+      "matches": [ "*://trade.jd.com/shopping/order/getOrderInfo.action*"]
+    },
+    {
+      "js":["javascripts/jd/success.js"],
+      "run_at": "document_end",
+      "matches": [ "*://*.jd.com/success/success.action*"]
+    },
+    {
+      "js":["javascripts/jd/jd_address_lists.js","javascripts/async.js","javascripts/jd/address.js"],
+      "run_at": "document_end",
+      "matches": [ "*://easybuy.jd.com/address/getEasyBuyList.action*"]
+    },
+	{
+	  "js":["javascripts/jd/pwd_reset_action.js"],
+	  "run_at": "document_end",
+	  "matches": [ "*://safe.jd.com/resetPwd/reset.action*"]
+	}
+  ],
+  "permissions": [
+    "tabs",
+    "background",
+    "browsingData",
+    "clipboardRead",
+    "clipboardWrite",
+    "cookies",
+    "notifications",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ]
+}
